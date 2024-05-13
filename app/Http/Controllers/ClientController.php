@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
@@ -13,19 +14,22 @@ class ClientController extends Controller
             'username' => 'required',
             'email' => 'required|email|unique:clients',
             'password' => 'required',
-            'confirm_password' => 'required|same:password'
+            'confirm_password' => 'required|same:password',
+        ],[
+           'confirm_password.same' => 'Password does not match',
         ]); 
         if($validate->fails()){
-            return('error');
+            return redirect()->back()->withErrors($validate)->withInput();
         }
-        dd($request->all());
+    
         $client = new Client();
         $client->username = $request->username;
         $client->email = $request->email;
-        $client->password = $request->password;
-        $client->confirm_password = $request->confirm_password;
+        $client->password = Hash::make($request->password);
         $client->save();
-        return redirect('user.login');
+
+        return redirect()->route('user.login');
+        
     }
     public function loginClient(Request $request){
         $validate = Validator::make($request->all(), [

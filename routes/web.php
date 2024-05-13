@@ -30,20 +30,24 @@ Route::get('/admin.login', function () {
     return view('adminAuth.adminLogin');
 })->name('admin.login');
 
-Route::post('/admin.login', [AdminController::class, 'loginAdmin'])->name('admin.login');
+Route::post('/admin.login', [AdminController::class, 'loginAdmin'])->name('login.admin');
 
 Route::get('/admin.dashboard', function () {
     return view('adminHome.adminDashboard');
 });
-Route::group(['middleware' => ['admin']], function(){
+/*Route::group(['middleware' => ['admin']], function(){
     Route::get('/admin.dashboard', 'AdminController@adminHome.adminDashboard')->name('admin.dashboard');
-}); 
+}); */
 
 
 Route::get('/admin.password.recovery', function(){
     return view('adminAuth.adminPassRecovery');
 })->name('admin.password.recovery'); 
 
+
+Route::post('/admin.password.recovery', [AdminController::class, 'adminPasswordReset'])->name('admin.password.reset');
+
+Route::get('/admin.password.reset/{token}', [AdminController::class, 'adminPasswordReset'])->name('admin-password-reset');
 //user authentication routes
 Route::get('/user.signup', function () {
     return view('userAuth.userSignup');

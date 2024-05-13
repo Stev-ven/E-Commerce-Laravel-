@@ -24,7 +24,7 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="{{ url('login.admin')}}" method="post">
+      <form action="{{ url('admin.login')}}" method="post">
         @csrf
         @method('POST')
         <div class="input-group mb-3">

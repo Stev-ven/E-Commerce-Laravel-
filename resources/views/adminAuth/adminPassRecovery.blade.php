@@ -24,7 +24,7 @@
     <div class="card-body login-card-body">
       <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
 
-      <form action="login.html" method="post">
+      <form action="{{ url('admin.password.recovery') }}" method="post">
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Enter your email" name="email">
           <div class="input-group-append">
